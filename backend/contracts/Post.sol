@@ -44,8 +44,27 @@ contract Blog{
         return posts;
     }
 
-    
+    function LikePost(uint256 _id) external{
+        require(didLiked[msg.sender][posts[_id].id] == false, "You have already Liked the post");
+        posts[_id].likeCount++;
 
+        uint256 temp = posts[_id].id;
+
+        didLiked[msg.sender][temp] = true;
+    }
+
+    function getPost(uint256 _id) public view returns(Post memory){
+        return posts[_id];
+    }
+
+    function getDidLiked(uint256 _id) public view returns(bool){
+        return didLiked[msg.sender][posts[_id].id];
+    }
+
+    function writeComment(uint256 _id, string memory content) external{
+        comments.push(Comment(_id, msg.sender, content, block.timestamp));
+        getComment[_id] = Comment(_id, msg.sender, content, block.timestamp);
+    }
 
 
 
