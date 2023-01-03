@@ -66,6 +66,26 @@ contract Blog{
         getComment[_id] = Comment(_id, msg.sender, content, block.timestamp);
     }
 
+    function getPostComments(uint256 _id) public view returns(Comment[] memory){
+        Comment[] memory temp = new Comment[](comments.length);
+        uint256 count = 0;
+
+        for(uint256 i = 0; i < comments.length; i++){
+            if(comments[i].id == _id){
+                temp[i] = comments[i];
+                count++;
+            }else{
+                continue;
+            }
+        }
+
+        Comment[] memory result = new Comment[](count);
+
+        for(uint256 i = 0; i < count; i++){
+            result[i] = temp[i];
+        }
+        return result;
+    }
 
 
 }
